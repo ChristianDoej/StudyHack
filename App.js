@@ -14,12 +14,12 @@ export default class App extends React.Component {
   }
   componentWillMount() {
     firebase.initializeApp({
-      apiKey: "AIzaSyCHCtAyhTZ0uEsgicB5gza4ILlKBUlmwEo",
-      authDomain: "exercise09-10.firebaseapp.com",
-      databaseURL: "https://exercise9-10.firebaseio.com",
-      projectId: "exercise09-10",
-      storageBucket: "exercise09-10.appspot.com",
-      messagingSenderId: "555573626794"
+      apiKey: "AIzaSyA1T15Lho-SWHM5gysJm-ejOmnsU3ePx9k",
+      authDomain: "studyhack-6b754.firebaseapp.com",
+      databaseURL: "https://studyhack-6b754.firebaseio.com",
+      projectId: "studyhack-6b754",
+      storageBucket: "studyhack-6b754.appspot.com",
+      messagingSenderId: "1030535619043"
       });
 
     firebase.auth().onAuthStateChanged(user => {
