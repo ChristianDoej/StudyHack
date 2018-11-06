@@ -26,7 +26,7 @@ export default class LoginForm extends Component {
         };
     }
 
-    signIn() {
+    signIn = () => {
         const { email, password } = this.state;
     
         this.setState({ error: '', loading: true });
@@ -34,15 +34,16 @@ export default class LoginForm extends Component {
         firebase.auth().signInWithEmailAndPassword(email, password)
           .then(this.onLoginSuccess.bind(this))
           .catch(this.onLoginFail.bind(this));
-      }
+    }
     
-      onLoginSuccess() {
-        this.setState({ email: '', password: '', loading: false, error: '' });
-      }
     
-      onLoginFail(err) {
-        this.setState({ loading: false, error: err.message });
-      }
+    onLoginSuccess() {
+    this.setState({ email: '', password: '', loading: false, error: '' });
+    }
+
+    onLoginFail(err) {
+    this.setState({ loading: false, error: err.message });
+    }
 
 
     render() {
@@ -115,7 +116,7 @@ export default class LoginForm extends Component {
             return <ActivityIndicator size='small' />
         }
         return (
-            <View style={styles.loginButton}>
+            <View style={styles.footerView}>
                 <Button
                     title="Log in"
                     activeOpacity={1}
@@ -123,10 +124,8 @@ export default class LoginForm extends Component {
                     buttonStyle={{ height: 50, width: 200, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30 }}
                     containerStyle={{ marginVertical: 10, marginTop: 50 }}
                     titleStyle={{ fontWeight: 'bold', color: 'white' }}
-                    onPress={this.signIn.bind(this)}
-                    // onPress={() => this.signIn()}
-                    >
-                </Button>
+                    onPress={this.signIn}
+                />
             </View>
         );
     }
