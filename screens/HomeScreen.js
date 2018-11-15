@@ -11,7 +11,7 @@ import {
   Button,
   ActivityIndicator
 } from 'react-native';
-import {ListItem} from 'react-native-elements';
+import {ListItem, SearchBar} from 'react-native-elements';
 import { WebBrowser } from 'expo';
 import firebase from 'firebase';
 import { MonoText } from '../components/StyledText';
@@ -64,6 +64,12 @@ readUserData() {
   
       return (
         <View>
+          
+          <SearchBar //Vi skal også have ordnet søgebar eller et filter
+            showLoading
+            platform="ios"
+            cancelButtonTitle="Cancel"
+            placeholder='Search' />
         <FlatList
           data={this.state.dataSource}
           renderItem={({ item }) =>
@@ -79,7 +85,7 @@ readUserData() {
               subtitle={item.price + " kr,- pr. time"}
               rightTitle={item.course}
               chevronColor='tomato'
-              onPress={() => this.props.navigation.navigate('Details', item)}
+              onPress={() => this.props.navigation.navigate('Tutor', item)}
               containerStyle={{ backgroundColor: 'white' }}
             />
           }
