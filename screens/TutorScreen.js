@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet} from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
-import { ActivityIndicator, FlatList, View, Image, Button, Text, Platform } from 'react-native';
-import {Avatar, Divider} from 'react-native-elements';
+import {  ScrollView, StyleSheet, ActivityIndicator, FlatList, View, Image, Text, Platform} from 'react-native';
+import {Avatar, Divider, Button, Icon} from 'react-native-elements';
 import firebase from 'firebase';
+
 
 
 export default class TutorScreen extends React.Component {
@@ -30,6 +30,7 @@ export default class TutorScreen extends React.Component {
         const price = navigation.getParam('price', 'No profile pic');
         const bio = navigation.getParam('bio', 'No profile pic');
 
+
        
 
 
@@ -42,44 +43,74 @@ export default class TutorScreen extends React.Component {
       }*/
   
       return (
-
-        
-          <View style={styles.container}>
-              <View style={{flex: 1, backgroundColor: 'powderblue', justifyContent: "center"}}>
+        <View style={styles.container}>
+         
+              <View style={{flex: 1, backgroundColor: 'tomato', justifyContent: "center", alignItems: 'center'}}>
                 <Avatar
-                size={{ width: 65, height: 65 , borderRadius:30}}
+                xlarge
                 rounded
                 source={{uri: profilePicture}}
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7}
                 />
               </View>
-              <Divider style={{ backgroundColor: 'blue' }} />
-            <View style={{flex: 1, backgroundColor: 'powderblue'}}>
-                <Text style={{fontSize: 30}}>{name}</Text>
-                <Text>{course}</Text>
-                <Text>{price}</Text>
+              <Divider style={{ backgroundColor: 'darkgrey' }} />
+            <View style={{flex: 1, backgroundColor: 'ivory'}}>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: 'space-evenly'}}>
+                    <Text
+                        style={{fontSize: 30}}
+                        color='black'
+                        textAlign='left'
+                        fontWeight='bold'
+                    
 
-            </View>
-            <Divider style={{ backgroundColor: 'blue' }} />
-            <View style={{flex: 1, backgroundColor: 'powderblue'}}>
-                <Text
-                style={{color: 'lightblue', fontSize: 20}}
+                    >{name}</Text>
+                    <Text
+                       style={{fontSize: 20}} 
+                       color='darkgrey'
+                       textAlign='left'
+                        fontWeight='bold'
+                    
+                    >{price} kr,- pr time</Text>
+                </View>
+                <View style={{flex: 1, flexDirection: "row", justifyContent: 'flex-start'}}>
+                    <Icon
+                        type='entypo'
+                        name='graduation-cap'
+                    />
+                    <Text>{course}</Text>
+                </View>
+            <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>    
+                <Button
+                style={{width:200}}
+                title="Skriv til mig"
+                rounded
+                backgroundColor="ivory"
+                color="black"
+                fontSize={20}
+                raised={true}
                
-                >'Skriv til Tutor'</Text>
-                <Text>{bio}</Text>
+               
+                ></Button>
             </View>
+            </View>
+            <Divider style={{ backgroundColor: 'darkgrey' }} />
+            <ScrollView  style={{flex: 1, backgroundColor: 'ivory'}}>
+                <Text
+                style={{color: 'black', fontSize: 40}}
+               
+                ></Text>
+                <Text>{bio}</Text>
             
-          
-         
-          </View>
+         </ScrollView>
+        </View>
       );
     }
   }
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: 'powderblue',
     },
     developmentModeText: {
       marginBottom: 20,
