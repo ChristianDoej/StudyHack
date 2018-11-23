@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExpoLinksView } from '@expo/samples';
-import {  ScrollView, StyleSheet, ActivityIndicator, FlatList, View, Image, Text, Platform} from 'react-native';
+import {  ScrollView, StyleSheet, ActivityIndicator, FlatList, View, Image, Text, Platform, Modal, TouchableHighlight, Alert} from 'react-native';
 import {Avatar, Divider, Button, Icon} from 'react-native-elements';
 import firebase from 'firebase';
 
@@ -16,10 +16,29 @@ export default class TutorScreen extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        isLoading: true
+        isLoading: true,
+        modalVisible: false
       }
     }
 
+    openModal() {
+        this.setState({
+            modalVisible: true
+        });
+      }
+
+    renderModal() {
+        return(
+            <Modal
+              visible={this.state.modalVisible}
+              animationType={'slide'}
+              onRequestClose={() => this.closeModal()}
+            >
+            <Button title='Knap i modal'/>
+            </Modal>
+
+        )
+    }
   
     render() {
 
@@ -43,8 +62,11 @@ export default class TutorScreen extends React.Component {
       }*/
   
       return (
-        <View style={styles.container}>
-         
+        <View style={styles.container}
+        renderItem={this.renderModal}
+        
+        >
+          
               <View style={{flex: 1, backgroundColor: 'tomato', justifyContent: "center", alignItems: 'center'}}>
                 <Avatar
                 xlarge
@@ -89,6 +111,8 @@ export default class TutorScreen extends React.Component {
                 color="black"
                 fontSize={20}
                 raised={true}
+                onPress={() => this.openModal()}
+              
                
                
                 ></Button>
@@ -107,6 +131,7 @@ export default class TutorScreen extends React.Component {
       );
     }
   }
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
