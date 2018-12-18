@@ -48,7 +48,7 @@ readUserData() {
         dataSource: tutors,
       });
 
-      console.log(tutors)
+      // console.log(tutors)
       
     });
 }
@@ -61,8 +61,9 @@ readUserData() {
         </View>
       )
     }
-  
+
       return (
+        
         <View>
           
           <SearchBar //Vi skal også have ordnet søgebar eller et filter

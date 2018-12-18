@@ -29,6 +29,7 @@ export default class TutorScreen extends React.Component {
         const profilePicture = navigation.getParam('image', 'No profile pic');
         const price = navigation.getParam('price', 'No profile pic');
         const bio = navigation.getParam('bio', 'No profile pic');
+        const email = navigation.getParam('email',"No email");
 
 
        
@@ -80,10 +81,11 @@ export default class TutorScreen extends React.Component {
                     />
                     <Text>{course}</Text>
                 </View>
-            <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>    
+            <View style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>   
+            <Text>{email}</Text>
                 <Button
                 style={{width:200}}
-                title="Skriv til mig"
+                title="skriv til mig"
                 rounded
                 backgroundColor="ivory"
                 color="black"
