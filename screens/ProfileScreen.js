@@ -8,6 +8,7 @@ import firebase from 'firebase';
 
 export default class ProfileScreen extends React.Component {
 
+
   static navigationOptions = {
     title: 'Profile',
   };
@@ -16,15 +17,14 @@ export default class ProfileScreen extends React.Component {
     this.state = {
       isLoading: true,
       currentUser: '',
-      // cEmail:'',
-      // cName:'',
+      userInfo:'',
     }
   }
 
 
   componentDidMount() {
     this.profileData();
-    this.getInfo()
+    // this.getInfo()
   }
 
   //Shift+option+f
@@ -43,33 +43,38 @@ export default class ProfileScreen extends React.Component {
         var cStudent = snapshot.val();
         if (cStudent.email == currentUser.email) {
           console.log(cStudent.email + " rigtigt")
+          userInfo = cStudent;
+          console.log(userInfo)
+          console.log(userInfo.email)
           that.setState({
             isLoading: false,
-            dataSource: cStudent,
           });
-          cEmail = cStudent.email
-          cName = cStudent.name
-          return null;
+          return userInfo;
         } console.log(cStudent.email + " forkert");
 
       });
     }
   }
   render() {
+    // const {navigation} = this.props;
+    // const name = navigation.getParam('name', 'No name');
+    // const email = navigation.getParam('email', 'No course defined');
+    //  const name = userInfo.name;
+    //  const email = userInfo.email;
 
-    // const name = dataSource.getParam('name', 'No name');
-    // const email = dataSource.getParam('email', 'No course defined');
-
-    console.log(this.state.dataSource)
+    const user = getInfo();
+    const name = user.name;
+    const email = user.email;
     return (
-      // <View>
-      //   <Text>{name}</Text>
-      //   <Text>{email}</Text>
-      // </View>
       <View>
+        {/* <Text>{name}</Text>
+        <Text>{email}</Text> */}
+        <View>
         <Text>Navn: Chris Rodney</Text>
         <Text>Email: chris.rodney@gmail.com</Text>
       </View>
+      </View>
+     
     );
   }
 }
