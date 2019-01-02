@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
+// eslint-disable-next-line max-len
 import { Text, StyleSheet, ActivityIndicator, TextInput, View, ImageBackground, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
-import { Font } from 'expo';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-const godfather = require('../assets/images/godfather.jpg');
-const screen1 = require('../assets/images/screen1.jpg');
 const screen4 = require('../assets/images/screen4.jpg');
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -25,6 +23,14 @@ export default class LoginForm extends Component {
             hasLogin: true
         };
     }
+    
+    onLoginSuccess() {
+    this.setState({ email: '', password: '', loading: false, error: '' });
+    }
+
+    onLoginFail(err) {
+    this.setState({ loading: false, error: err.message });
+    }
 
     signIn = () => {
         const { email, password } = this.state;
@@ -35,16 +41,25 @@ export default class LoginForm extends Component {
           .then(this.onLoginSuccess.bind(this))
           .catch(this.onLoginFail.bind(this));
     }
-    
-    
-    onLoginSuccess() {
-    this.setState({ email: '', password: '', loading: false, error: '' });
-    }
 
-    onLoginFail(err) {
-    this.setState({ loading: false, error: err.message });
+    renderButton() {
+        if (this.state.loading) {
+            return <ActivityIndicator size='small' />;
+        }
+        return (
+            <View style={styles.footerView}>
+                <Button
+                    title="Log in"
+                    activeOpacity={1}
+                    underlayColor="transparent"
+                    buttonStyle={{ height: 50, width: 200, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30 }}
+                    containerStyle={{ marginVertical: 10, marginTop: 50 }}
+                    titleStyle={{ fontWeight: 'bold', color: 'white' }}
+                    onPress={this.signIn}
+                />
+            </View>
+        );
     }
-
 
     render() {
         switch (this.state.hasLogin) {
@@ -57,7 +72,8 @@ export default class LoginForm extends Component {
                                     <Text style={styles.header}>StudyHack</Text>
                                 </View>
 
-                                <TextInput style={styles.loginText}
+                                <TextInput 
+                                    style={styles.loginText}
                                     label='Username'
                                     containerStyle={{ marginVertical: 10 }}
                                     keyboardAppearance="light"
@@ -73,11 +89,12 @@ export default class LoginForm extends Component {
                                 />
                             </View>
                             <View style={styles.passwordInput}>
-                                <TextInput style={styles.loginText}
+                                <TextInput 
+                                    style={styles.loginText}
                                     placeholder='Password'
                                     placeholderTextColor="white"
                                     value={this.state.password}
-                                    secureTextEntry={true}
+                                    secureTextEntry
                                     onChangeText={password => this.setState({ password })}
                                 />
 
@@ -96,7 +113,8 @@ export default class LoginForm extends Component {
                                     buttonStyle={{ height: 50, width: 200, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30 }}
                                     containerStyle={{ marginVertical: 10, marginTop: 50 }}
                                     titleStyle={{ fontWeight: 'bold', color: 'white' }}
-                                    onPress={() => this.setState({ hasLogin: false })} />
+                                    onPress={() => this.setState({ hasLogin: false })}
+                                />
                             </View>
                         </ImageBackground>
                     </View>
@@ -107,28 +125,11 @@ export default class LoginForm extends Component {
                         <SignUpForm />
                         <Button title='go back' onPress={() => this.setState({ hasLogin: true })} />
                     </View>
-                )
-            }
+                );
+            } default:
         }
     }
-    renderButton() {
-        if (this.state.loading) {
-            return <ActivityIndicator size='small' />
-        }
-        return (
-            <View style={styles.footerView}>
-                <Button
-                    title="Log in"
-                    activeOpacity={1}
-                    underlayColor="transparent"
-                    buttonStyle={{ height: 50, width: 200, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30 }}
-                    containerStyle={{ marginVertical: 10, marginTop: 50 }}
-                    titleStyle={{ fontWeight: 'bold', color: 'white' }}
-                    onPress={this.signIn}
-                />
-            </View>
-        );
-    }
+    
 }
 const styles = StyleSheet.create({
     container: {

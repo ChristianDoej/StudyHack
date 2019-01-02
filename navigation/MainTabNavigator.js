@@ -4,7 +4,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import TutorScreen from '../screens/TutorScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -13,6 +12,14 @@ import ProfileScreen from '../screens/ProfileScreen';
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Tutor: TutorScreen
+});
+
+const SettingsStack = createStackNavigator({
+  Settings: SettingsScreen,
+});
+
+const ProfileStack = createStackNavigator({
+  Profile: ProfileScreen,
 });
 
 HomeStack.navigationOptions = {
@@ -29,22 +36,22 @@ HomeStack.navigationOptions = {
   ),
 };
 
-
-
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
-});
-
-const ProfileStack = createStackNavigator({
-  Profile: ProfileScreen,
-});
-
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+    />
+  ),
+};
+
+ProfileStack.navigationOptions = {
+  tabBarLabel: 'Profile',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-contact${focused ? '' : '-outline'}` : 'md-contact'}
     />
   ),
 };

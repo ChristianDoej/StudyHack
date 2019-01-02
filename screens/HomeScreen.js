@@ -18,7 +18,7 @@ import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Home',
   };
 constructor(props) {
   super(props);
@@ -66,11 +66,11 @@ readUserData() {
         
         <View>
           
-          <SearchBar //Vi skal også have ordnet søgebar eller et filter
+          {/* <SearchBar //Vi skal også have ordnet søgebar eller et filter
             showLoading
             platform="ios"
             cancelButtonTitle="Cancel"
-            placeholder='Search' />
+            placeholder='Search' /> */}
         <FlatList
           data={this.state.dataSource}
           renderItem={({ item }) =>
