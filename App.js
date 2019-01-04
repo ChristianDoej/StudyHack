@@ -23,7 +23,7 @@ export default class App extends React.Component {
       });
 
     firebase.auth().onAuthStateChanged(user => {
-      if(user) {
+      if (user) {
         this.setState({ loggedIn: true });
       } else {
         this.setState({ loggedIn: false });
@@ -52,7 +52,6 @@ export default class App extends React.Component {
 }
 
   
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

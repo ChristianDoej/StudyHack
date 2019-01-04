@@ -41,18 +41,13 @@ export default class TutorScreen extends React.Component {
     }
   
     render() {
-
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const name = navigation.getParam('name', 'No name');
         const course = navigation.getParam('course', 'No course defined');
         const profilePicture = navigation.getParam('image', 'No profile pic');
         const price = navigation.getParam('price', 'No profile pic');
         const bio = navigation.getParam('bio', 'No profile pic');
-        const email = navigation.getParam('email',"No email");
-
-
-       
-
+        const email = navigation.getParam('email', "No email");
 
      /* if (this.state.isLoading) {
         return (

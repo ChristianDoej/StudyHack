@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 // eslint-disable-next-line max-len
-import { Text, StyleSheet, ActivityIndicator, TextInput, View, ImageBackground, Dimensions } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Text, StyleSheet, ActivityIndicator, View } from 'react-native';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
+import Card from '../components/common/Card';
+import CardSection from '../components/common/CardSection';
+import Button from '../components/common/Button';
+import InputLogin from '../components/common/InputLogin';
+import Header from '../components/common/Header';
 
-const screen4 = require('../assets/images/screen4.jpg');
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class LoginForm extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             email: '',
             password: '',
@@ -23,41 +22,35 @@ export default class LoginForm extends Component {
             hasLogin: true
         };
     }
-    
+
     onLoginSuccess() {
-    this.setState({ email: '', password: '', loading: false, error: '' });
+        this.setState({ email: '', password: '', loading: false, error: '' });
     }
 
     onLoginFail(err) {
-    this.setState({ loading: false, error: err.message });
+        this.setState({ loading: false, error: err.message });
     }
 
     signIn = () => {
         const { email, password } = this.state;
-    
         this.setState({ error: '', loading: true });
-    
-        firebase.auth().signInWithEmailAndPassword(email, password)
-          .then(this.onLoginSuccess.bind(this))
-          .catch(this.onLoginFail.bind(this));
+
+        firebase.auth().signInWithEmailAndPassword(email.trim(), password)
+            .then(this.onLoginSuccess.bind(this))
+            .catch(this.onLoginFail.bind(this));
     }
 
     renderButton() {
         if (this.state.loading) {
-            return <ActivityIndicator size='small' />;
+            return (
+            <View style={styles.loadingStyle}>
+                <ActivityIndicator size='small' />
+            </View>);
         }
         return (
-            <View style={styles.footerView}>
-                <Button
-                    title="Log in"
-                    activeOpacity={1}
-                    underlayColor="transparent"
-                    buttonStyle={{ height: 50, width: 200, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30 }}
-                    containerStyle={{ marginVertical: 10, marginTop: 50 }}
-                    titleStyle={{ fontWeight: 'bold', color: 'white' }}
-                    onPress={this.signIn}
-                />
-            </View>
+            <Button onPress={this.signIn.bind(this)}>
+                Log in
+                </Button>
         );
     }
 
@@ -65,71 +58,60 @@ export default class LoginForm extends Component {
         switch (this.state.hasLogin) {
             case true:
                 return (
-                    <View style={styles.container}>
-                        <ImageBackground source={screen4} style={styles.backgroundImage}>
-                            <View style={styles.loginView}>
-                                <View style={styles.loginTitle}>
-                                    <Text style={styles.header}>StudyHack</Text>
-                                </View>
-
-                                <TextInput 
-                                    style={styles.loginText}
+                    <View>
+                        <Header headerText={'studyhub'} />
+                        <Card>
+                            <CardSection>
+                                <InputLogin
                                     label='Username'
-                                    containerStyle={{ marginVertical: 10 }}
-                                    keyboardAppearance="light"
-                                    autoFocus={false}
-                                    autoCapitalize="none"
                                     autoCorrect={false}
-                                    keyboardType="email-address"
-                                    returnKeyType="next"
-                                    placeholderTextColor="white"
-                                    placeholder='Username'
+                                    placeholder='user@gmail.com'
                                     value={this.state.email}
                                     onChangeText={email => this.setState({ email })}
                                 />
-                            </View>
-                            <View style={styles.passwordInput}>
-                                <TextInput 
-                                    style={styles.loginText}
-                                    placeholder='Password'
-                                    placeholderTextColor="white"
+                            </CardSection>
+                            <CardSection>
+                                <InputLogin
+                                    label='Password'
+                                    placeholder='password'
                                     value={this.state.password}
                                     secureTextEntry
                                     onChangeText={password => this.setState({ password })}
                                 />
-
+                            </CardSection>
+                            <CardSection>
                                 <Text style={styles.errorTextStyle}>
                                     {this.state.error}
                                 </Text>
-                            </View>
-                            <View>
-                            {this.renderButton()}
-                            </View>
-                            <View style={styles.footerView}>
-                                <Button
-                                    title='Sign up'
-                                    activeOpacity={1}
-                                    underlayColor="transparent"
-                                    buttonStyle={{ height: 50, width: 200, backgroundColor: 'transparent', borderWidth: 2, borderColor: 'white', borderRadius: 30 }}
-                                    containerStyle={{ marginVertical: 10, marginTop: 50 }}
-                                    titleStyle={{ fontWeight: 'bold', color: 'white' }}
-                                    onPress={() => this.setState({ hasLogin: false })}
-                                />
-                            </View>
-                        </ImageBackground>
+                            </CardSection>
+                            <CardSection>
+                                {this.renderButton()}
+                            </CardSection>
+                            <CardSection>
+                                <Button onPress={() => this.setState({ hasLogin: false })}>
+                                    Sign up
+                            </Button>
+                            </CardSection>
+                        </Card>
                     </View>
                 );
             case false: {
                 return (
                     <View>
                         <SignUpForm />
-                        <Button title='go back' onPress={() => this.setState({ hasLogin: true })} />
+                        <Card>
+                            <CardSection>
+                            <Button onPress={() => this.setState({ hasLogin: true })}>
+                            Go back!
+                        </Button>
+                            </CardSection>
+                        </Card>
                     </View>
                 );
             } default:
         }
     }
-    
+
 }
 const styles = StyleSheet.create({
     container: {
@@ -137,15 +119,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-    backgroundImage: {
-        flex: 1,
-        top: 0,
-        left: 0,
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     errorTextStyle: {
         fontSize: 20,
@@ -187,5 +160,10 @@ const styles = StyleSheet.create({
         flex: 0.5,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    loadingStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
 });

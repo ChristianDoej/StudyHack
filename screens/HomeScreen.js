@@ -24,7 +24,7 @@ constructor(props) {
   super(props);
   this.state = {
     isLoading: true
-  }
+  };
 }
   
 
@@ -33,11 +33,10 @@ componentDidMount() {
 }
 
 readUserData() {
+  const that = this;
 
-  var that = this;
-
-  return firebase.database().ref('tutors').on('value', function (snapshot) {
-      var tutors = Object.values(snapshot.val());
+  return firebase.database().ref('tutors').on('value', (snapshot) => {
+      const tutors = Object.values(snapshot.val());
       //Brug artist ID til at hente fulde navn og erstat dataen. 
       //Da dataen i øvelserne kun er fra Taylor Swift, går vi bare ind i første object i Arrayet, 
       //da vi ved alle objekter har samme artist. Er der forskellige, kan man loope igennem arrayet og erstatte variabler
@@ -49,7 +48,6 @@ readUserData() {
       });
 
       // console.log(tutors)
-      
     });
 }
  
@@ -59,31 +57,31 @@ readUserData() {
         <View style={{ flex: 1, padding: 20, justifyContent: 'center', alignItems: 'stretch' }}>
           <ActivityIndicator />
         </View>
-      )
-    }
-
+      );
+    } 
       return (
         
         <View>
-          
-          {/* <SearchBar //Vi skal også have ordnet søgebar eller et filter
+          <SearchBar //Vi skal også have ordnet søgebar eller et filter
             showLoading
             platform="ios"
             cancelButtonTitle="Cancel"
-            placeholder='Search' /> */}
+            placeholder='Search' 
+          />
         <FlatList
           data={this.state.dataSource}
           renderItem={({ item }) =>
             <ListItem
               avatar={
                 <Image
-                  style={{ width: 65, height: 65 , borderRadius:30}}
-                  source={{ uri: item.image }} />
+                  style={{ width: 65, height: 65, borderRadius: 30 }}
+                  source={{ uri: item.image }} 
+                />
               }
               title={item.name}
               titleStyle={{ color: 'tomato', fontWeight: 'bold' }}
               subtitleStyle={{ color: 'tomato' }}
-              subtitle={item.price + " kr,- pr. time"}
+              subtitle={`${item.price} kr,- pr. time`}
               rightTitle={item.course}
               chevronColor='tomato'
               onPress={() => this.props.navigation.navigate('Tutor', item)}

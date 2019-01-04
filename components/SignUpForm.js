@@ -1,14 +1,13 @@
+/* eslint-disable no-undef */
 import React, { Component } from 'react';
-import { Text, TextInput, StyleSheet, View, ActivityIndicator, ImageBackground, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, ActivityIndicator } from 'react-native';
 import firebase from 'firebase';
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Card from '../components/common/Card';
+import CardSection from '../components/common/CardSection';
+import Button from '../components/common/Button';
+import InputLogin from '../components/common/InputLogin';
+import Header from '../components/common/Header';
 
-const godfather = require('../assets/images/godfather.jpg');
-const screen1 = require('../assets/images/screen1.jpg');
-const screen4 = require('../assets/images/screen4.jpg');
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export default class SignUpForm extends Component {
     constructor(props) {
@@ -16,8 +15,9 @@ export default class SignUpForm extends Component {
         this.state = {
             email: '',
             password: '',
-            loading: false
-        }
+            loading: false,
+            hasLogin: true,
+        };
     }
 
     onButtonPress() {
@@ -37,7 +37,7 @@ export default class SignUpForm extends Component {
             loading: false,
             error: ''
         });
-        alert("User created successfully");
+        alert('User created successfully');
     }
     onSignUpFailed(err) {
         this.setState({
@@ -45,48 +45,57 @@ export default class SignUpForm extends Component {
             error: err.message
         });
     }
+
+    renderButton() {
+        if (this.state.loading) {
+            return (
+                <View style={styles.loadingStyle}>
+                    <ActivityIndicator size='small' />
+                </View>);
+        }
+        return (
+            <Button onPress={this.onButtonPress.bind(this)}>
+            Sign up!
+            </Button>
+        );
+    }
+
     render() {
         return (
             <View >
-            <ImageBackground source={screen1} style={styles.backgroundImage}>
-                <View style={styles.signUpView}>
-                <View style={styles.signUpTitle}>
-                <Text>Sign up</Text>
-                </View>
-                <View style={styles.signUpInput}>
-                <TextInput
-                    label='Username'
-                    placeholder='user@mail.com'
-                    value={this.state.email}
-                    onChangeText={email => this.setState({ email })}
-                />
-                <TextInput
-                    placeholder='password'
-                    value={this.state.password}
-                    secureTextEntry={true}
-                    onChangeText={password => this.setState({ password })}
-                />
-                <Text style={styles.errorTextStyle}>
-                    {this.state.error}
-                </Text>
-                </View>
-
-                {this.renderButton()}
-                </View>
-                </ImageBackground>
+                <Header headerText={'Sign up'} />
+                <Card>
+                    <CardSection>
+                        <InputLogin
+                            label='Username'
+                            placeholder='user@mail.com'
+                            value={this.state.email}
+                            onChangeText={email => this.setState({ email })}
+                        />
+                    </CardSection>
+                    <CardSection>
+                        <InputLogin
+                            label='Password'
+                            placeholder='password'
+                            value={this.state.password}
+                            secureTextEntry
+                            onChangeText={password => this.setState({ password })}
+                        />
+                    </CardSection>
+                    <CardSection>
+                        <Text style={styles.errorTextStyle}>
+                            {this.state.error}
+                        </Text>
+                    </CardSection>
+                    <CardSection>
+                        {this.renderButton()}
+                    </CardSection>
+                </Card>
             </View>
         );
     }
 
-    renderButton() {
-        if (this.state.loading) {
-            return <ActivityIndicator size='small' />
-        }
-        return (
-            <Button title="Sign up" onPress={this.onButtonPress.bind(this)}>
-            </Button>
-        );
-    }
+
 }
 
 const styles = StyleSheet.create({
@@ -95,15 +104,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-    backgroundImage: {
-        flex: 1,
-        top: 0,
-        left: 0,
-        width: SCREEN_WIDTH,
-        height: SCREEN_HEIGHT,
-        justifyContent: 'center',
-        alignItems: 'center'
     },
     errorTextStyle: {
         fontSize: 20,
@@ -122,4 +122,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 150,
     },
+    loadingStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
 });
