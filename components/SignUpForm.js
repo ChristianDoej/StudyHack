@@ -6,7 +6,7 @@ import Card from '../components/common/Card';
 import CardSection from '../components/common/CardSection';
 import Button from '../components/common/Button';
 import InputLogin from '../components/common/InputLogin';
-import Header from '../components/common/Header';
+import Header2 from '../components/common/Header2';
 
 
 export default class SignUpForm extends Component {
@@ -63,7 +63,7 @@ export default class SignUpForm extends Component {
     render() {
         return (
             <View >
-                <Header headerText={'Sign up'} />
+                <Header2 headerText={'Sign up'} />
                 <Card>
                     <CardSection>
                         <InputLogin
